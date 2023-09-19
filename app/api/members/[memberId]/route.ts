@@ -10,6 +10,7 @@ export async function DELETE(
   try {
     const profile = await currentProfile();
     const { searchParams } = new URL(req.url);
+
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
@@ -17,11 +18,11 @@ export async function DELETE(
     }
 
     if (!serverId) {
-      return new NextResponse("Server ID Missing", { status: 400 });
+      return new NextResponse("Server ID missing", { status: 400 });
     }
 
     if (!params.memberId) {
-      return new NextResponse("Member ID Missing", { status: 400 });
+      return new NextResponse("Member ID missing", { status: 400 });
     }
 
     const server = await db.server.update({
@@ -66,6 +67,7 @@ export async function PATCH(
     const profile = await currentProfile();
     const { searchParams } = new URL(req.url);
     const { role } = await req.json();
+
     const serverId = searchParams.get("serverId");
 
     if (!profile) {
@@ -73,11 +75,11 @@ export async function PATCH(
     }
 
     if (!serverId) {
-      return new NextResponse("Server ID Missing", { status: 400 });
+      return new NextResponse("Server ID missing", { status: 400 });
     }
 
     if (!params.memberId) {
-      return new NextResponse("Member ID Missing", { status: 400 });
+      return new NextResponse("Member ID missing", { status: 400 });
     }
 
     const server = await db.server.update({

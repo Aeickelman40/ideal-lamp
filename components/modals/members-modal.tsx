@@ -1,13 +1,7 @@
 "use client";
 
-import { useState } from "react";
-
 import axios from "axios";
-
 import qs from "query-string";
-
-import { useRouter } from "next/navigation";
-
 import {
   Check,
   Gavel,
@@ -18,8 +12,9 @@ import {
   ShieldCheck,
   ShieldQuestion,
 } from "lucide-react";
-
+import { useState } from "react";
 import { MemberRole } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 import {
   Dialog,
@@ -28,7 +23,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import { useModal } from "@/hooks/use-modal-store";
 import { ServerWithMembersWithProfiles } from "@/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -62,7 +56,6 @@ export const MembersModal = () => {
   const onKick = async (memberId: string) => {
     try {
       setLoadingId(memberId);
-
       const url = qs.stringifyUrl({
         url: `/api/members/${memberId}`,
         query: {
@@ -71,6 +64,7 @@ export const MembersModal = () => {
       });
 
       const response = await axios.delete(url);
+
       router.refresh();
       onOpen("members", { server: response.data });
     } catch (error) {
@@ -80,13 +74,11 @@ export const MembersModal = () => {
     }
   };
 
-  // TODO: Fix updating member status, getting 404 from servers/api/members, should be api/members. File structure for routing?
-
   const onRoleChange = async (memberId: string, role: MemberRole) => {
     try {
       setLoadingId(memberId);
       const url = qs.stringifyUrl({
-        url: `api/members/${memberId}`,
+        url: `/api/members/${memberId}`,
         query: {
           serverId: server?.id,
         },
